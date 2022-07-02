@@ -2,7 +2,7 @@
   "name": "project-front",
   "version": "1.0.0",
   "description": "My best Nuxt.js project",
-  "author": "zwt",
+  "author": "Vittore",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
