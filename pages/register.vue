@@ -69,7 +69,7 @@ export default {
               }
             })
           }else{
-            this.$message.error(ret.message)
+            this.$message.error(ret.data.message)
           }
         }else{
           console.log('校验失败')
