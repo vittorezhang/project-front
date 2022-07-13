@@ -6,6 +6,7 @@ let service = axios.create({
   baseURL:'/api'
 })
 
+const TOKEN_KEY = 'KKB_USER_TOKEN'
 // 请求拦截
 // 主要做token的管理
 Vue.prototype.$http =service
