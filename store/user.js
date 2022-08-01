@@ -2,7 +2,11 @@ import { http } from "../plugins/axios"
 
 
 const state = ()=>({
-  
+  token:'',
+  id:'',
+  email:"",
+  nickname:"",
+  avatar:''
 })
 
 
