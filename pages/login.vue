@@ -108,8 +108,8 @@ export default {
         timer:0
       },
       form:{
-        email:"316783812@qq.com",
-        passwd:"a316783812",
+        email:"1607458660@qq.com",
+        passwd:"@yc18211588737",
         captcha:""
       },
       rules:{

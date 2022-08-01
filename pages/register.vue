@@ -80,10 +80,10 @@ export default {
   data(){
     return {
       form:{
-        email:"316783812@qq.com",
-        nickname:"大圣老师",
-        passwd:"a316783812",
-        repasswd:"a316783812",
+        email:"1607458660@qq.com",
+        nickname:"Vittore",
+        passwd:"@yc18211588737",
+        repasswd:"@yc18211588737",
         captcha:""
       },
       rules:{
