@@ -11,7 +11,15 @@ const state = ()=>({
 
 
 const mutations = {
-  
+  SET_TOKEN(state, token){
+
+  },
+  SET_USER(state,user){
+    
+  },
+  LOGOUT(state){
+   
+  }
 }
 
 const actions = {
