@@ -30,7 +30,12 @@ const mutations = {
 }
 
 const actions = {
- 
+  login: async({state,commit}, data)=>{
+    
+  },
+  detail: async({state,commit}, data)=>{
+   
+  }
 }
 
 export default {
