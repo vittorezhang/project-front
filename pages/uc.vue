@@ -4,6 +4,9 @@
     <div ref='drag' id="drag">
       <input type="file" name="file" @change="handleFileChange">
     </div>
+    <div>
+      <el-button @click="uploadFile">上传</el-button>
+    </div>
   </div>
 </template>
 
@@ -22,7 +25,8 @@ export default {
       const [file] = e.target.files
       if(!file) return 
       this.file = file
-    }
+    },
+    async uploadFile(){}
   }
 }
 </script>
