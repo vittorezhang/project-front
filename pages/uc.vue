@@ -43,3 +43,10 @@ export default {
   }
 }
 </script>
+<style lang="stylus">
+#drag
+  height 100px
+  line-height 100px
+  border 2px dashed #eee
+  text-align center 
+</style>
