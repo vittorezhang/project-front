@@ -21,7 +21,7 @@ export default {
 
   },
 	async mounted(){
-    const res = await this.$http.get('/user/info')
+    // const res = await this.$http.get('/user/info')
   },
   methods:{
     handleFileChange(e){
@@ -29,7 +29,17 @@ export default {
       if(!file) return 
       this.file = file
     },
-    async uploadFile(){}
+    async uploadFile(){
+			const form = new FormData()
+      form.append('name','file')
+      form.append('file',this.file)
+      const res = await this.$http.post('/uploadfile',form,{
+        onUploadProgress:progress=>{
+          this.uploadProgress = Number(((progress.loaded/progress.total)*100).toFixed(2))
+        }
+      })
+      console.log(res)
+		}
   }
 }
 </script>
