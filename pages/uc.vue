@@ -20,6 +20,9 @@ export default {
   computed:{
 
   },
+	async mounted(){
+    const res = await this.$http.get('/user/info')
+  },
   methods:{
     handleFileChange(e){
       const [file] = e.target.files
