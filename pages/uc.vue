@@ -22,6 +22,7 @@ export default {
   },
 	async mounted(){
     // const res = await this.$http.get('/user/info')
+		this.bindEvents()
   },
   methods:{
     handleFileChange(e){
@@ -39,7 +40,28 @@ export default {
         }
       })
       console.log(res)
-		}
+		},
+		bindEvents(){
+      const drag = this.$refs.drag
+      drag.addEventListener('dragover',e=>{
+        drag.style.borderColor = 'red'
+        e.preventDefault()
+      })
+      drag.addEventListener('dragleave',e=>{
+        drag.style.borderColor = '#eee'
+        e.preventDefault()
+      })
+      drag.addEventListener('drop',e=>{
+        const fileList = e.dataTransfer.files
+        drag.style.borderColor = '#eee'
+        this.file = fileList[0]
+
+
+        e.preventDefault()
+
+        // const e.dataTrans
+      })
+    },
   }
 }
 </script>
