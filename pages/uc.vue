@@ -4,6 +4,9 @@
     <div ref='drag' id="drag">
       <input type="file" name="file" @change="handleFileChange">
     </div>
+		<div>
+      <el-progress :stroke-width='20' :text-inside="true" :percentage="uploadProgress" ></el-progress>
+    </div>
     <div>
       <el-button @click="uploadFile">上传</el-button>
     </div>
@@ -14,7 +17,9 @@
 export default {
   data(){
     return {
-      file:null
+      file:null,
+			uploadProgress:0,
+			chunks:[]
     }
   },
   computed:{
