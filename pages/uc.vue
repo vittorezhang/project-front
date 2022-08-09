@@ -18,12 +18,14 @@ export default {
   data(){
     return {
       file:null,
-			uploadProgress:0,
+			// uploadProgress:0,
 			chunks:[]
     }
   },
   computed:{
-
+		uploadProgress(){
+      
+    }
   },
 	async mounted(){
     // const res = await this.$http.get('/user/info')
