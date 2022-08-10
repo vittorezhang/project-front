@@ -32,6 +32,22 @@ export default {
 		this.bindEvents()
   },
   methods:{
+		async blobToString(blob){
+      return new Promise(resolve=>{
+        const reader = new FileReader()
+        reader.onload = function(){
+          console.log(reader.result)
+          const ret = reader.result.split('')
+                        .map(v=>v.charCodeAt())
+                        .map(v=>v.toString(16).toUpperCase())
+                        // .map(v=>v.padStart(2,'0'))
+                        .join('')
+          resolve(ret)
+          // const ret = reader.
+        }
+        reader.readAsBinaryString(blob)
+      })
+    },
 		async isGif(file){
       // GIF89a 和GIF87a
       // 前面6个16进制，'47 49 46 38 39 61' '47 49 46 38 37 61'
