@@ -32,6 +32,14 @@ export default {
 		this.bindEvents()
   },
   methods:{
+		async isGif(file){
+      
+    },
+		async isImage(file){
+      // 通过文件流来判定
+      // 先判定是不是gif
+      return await this.isGif(file)
+    },
     handleFileChange(e){
       const [file] = e.target.files
       if(!file) return 
