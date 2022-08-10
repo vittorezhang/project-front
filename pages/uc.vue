@@ -33,7 +33,12 @@ export default {
   },
   methods:{
 		async isGif(file){
-      
+      // GIF89a 和GIF87a
+      // 前面6个16进制，'47 49 46 38 39 61' '47 49 46 38 37 61'
+      // 16进制的转换
+      const ret = await this.blobToString(file.slice(0,6))
+      const isGif = (ret=='47 49 46 38 39 61') || (ret=='47 49 46 38 37 61')
+      return isGif
     },
 		async isImage(file){
       // 通过文件流来判定
