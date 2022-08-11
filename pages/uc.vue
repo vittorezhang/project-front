@@ -48,6 +48,11 @@ export default {
         reader.readAsBinaryString(blob)
       })
     },
+		async isPng(file){
+      const ret = await this.blobToString(file.slice(0,8))
+      const ispng = (ret == "89 50 4E 47 0D 0A 1A 0A")
+      return ispng
+    },
 		async isGif(file){
       // GIF89a 和GIF87a
       // 前面6个16进制，'47 49 46 38 39 61' '47 49 46 38 37 61'
