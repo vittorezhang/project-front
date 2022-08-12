@@ -79,11 +79,11 @@ export default {
       this.file = file
     },
     async uploadFile(){
-			if(!await this.isImage(this.file)){
-        console.log('文件格式不对')
-      }else{
-        console.log('格式正确')
-      }
+			// if(!await this.isImage(this.file)){
+      //   console.log('文件格式不对')
+      // }else{
+      //   console.log('格式正确')
+      // }
 			const form = new FormData()
       form.append('name','file')
       form.append('file',this.file)
