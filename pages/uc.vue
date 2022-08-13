@@ -73,6 +73,15 @@ export default {
       // 先判定是不是gif
       return await this.isGif(file)
     },
+		createFileChunk(file,size=CHUNK_SIZE){
+      const chunks = [] 
+      let cur = 0
+      while(cur<this.file.size){
+        chunks.push({index:cur, file:this.file.slice(cur,cur+size)})
+        cur+=size
+      }
+      return chunks
+    },
     handleFileChange(e){
       const [file] = e.target.files
       if(!file) return 
