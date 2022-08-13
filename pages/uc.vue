@@ -82,6 +82,19 @@ export default {
       }
       return chunks
     },
+		async calculateHashWorker(){
+      return new Promise(resolve=>{
+        this.worker = new Worker('/hash.js')
+        this.worker.postMessage({chunks:this.chunks})
+        this.worker.onmessage = e=>{
+          const {progress,hash} = e.data
+          this.hashProgress = Number(progress.toFixed(2))
+          if(hash){
+            resolve(hash)
+          }
+        }
+      })
+    },
     handleFileChange(e){
       const [file] = e.target.files
       if(!file) return 
