@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import sparkMD5 from 'spark-md5'
 export default {
   data(){
     return {
@@ -96,7 +97,7 @@ export default {
       })
     },
 		async calculateHashSample(){
-			
+
 		},
     handleFileChange(e){
       const [file] = e.target.files
