@@ -106,6 +106,9 @@ export default {
       // }else{
       //   console.log('格式正确')
       // }
+			this.chunks = this.createFileChunk(this.file)
+      const hash = await this.calculateHashWorker()
+      console.log('文件hash',hash)
 			const form = new FormData()
       form.append('name','file')
       form.append('file',this.file)
