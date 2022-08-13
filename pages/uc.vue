@@ -95,6 +95,9 @@ export default {
         }
       })
     },
+		async calculateHashSample(){
+			
+		},
     handleFileChange(e){
       const [file] = e.target.files
       if(!file) return 
