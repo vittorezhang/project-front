@@ -106,7 +106,31 @@ export default {
         const size = file.size
         const offset = 2*1024*1024
         // 第一个2M，最后一个区块数据全要
+				let chunks = [file.slice(0,offset)]
+
+        let cur = offset
+        while(cur<size){
+          if(cur+offset>=size){
+            // 最后一个区快
+            chunks.push(file.slice(cur, cur+offset))
+
+          }else{
+            // 中间的区块
+            const mid = cur+offset/2
+            const end = cur+offset
+            chunks.push(file.slice(cur, cur+2))
+            chunks.push(file.slice(mid, mid+2))
+            chunks.push(file.slice(end-2, end))
+          }
+          cur+=offset
+        }
 				// 中间的，取前中后各2个字节
+				reader.readAsArrayBuffer(new Blob(chunks))
+        reader.onload = e=>{
+          spark.append(e.target.result)
+          this.hashProgress = 100
+          resolve(spark.end())
+        }
 			})
 		},
     handleFileChange(e){
