@@ -98,6 +98,7 @@ export default {
       })
     },
 		async calculateHashSample(){
+			// 布隆过滤器  判断一个数据存在与否
 			return new Promise(resolve=>{
 				const spark = new sparkMD5.ArrayBuffer()
         const reader = new FileReader()
@@ -146,7 +147,9 @@ export default {
       // }
 			this.chunks = this.createFileChunk(this.file)
       const hash = await this.calculateHashWorker()
+			const hash1 = await this.calculateHashSample()
       console.log('文件hash',hash)
+      console.log('文件hash1',hash1)
 			const form = new FormData()
       form.append('name','file')
       form.append('file',this.file)
