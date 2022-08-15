@@ -98,7 +98,16 @@ export default {
       })
     },
 		async calculateHashSample(){
+			return new Promise(resolve=>{
+				const spark = new sparkMD5.ArrayBuffer()
+        const reader = new FileReader()
 
+        const file = this.file
+        const size = file.size
+        const offset = 2*1024*1024
+        // 第一个2M，最后一个区块数据全要
+				// 中间的，取前中后各2个字节
+			})
 		},
     handleFileChange(e){
       const [file] = e.target.files
