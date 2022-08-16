@@ -139,18 +139,29 @@ export default {
       if(!file) return 
       this.file = file
     },
-    async uploadFile(){
-			// if(!await this.isImage(this.file)){
+     async uploadFile(){
+
+      if(!this.file){
+        return 
+      }
+
+
+
+      // console.log(this.file)
+      // if(!await this.isImage(this.file)){
       //   console.log('文件格式不对')
       // }else{
       //   console.log('格式正确')
       // }
-			this.chunks = this.createFileChunk(this.file)
-      const hash = await this.calculateHashWorker()
-			const hash1 = await this.calculateHashSample()
-      console.log('文件hash',hash)
-      console.log('文件hash1',hash1)
-			// 问一下后端，文件是否上传过，如果没有，是否有存在的切片
+      const chunks = this.createFileChunk(this.file)
+      // const hash = await this.calculateHashWorker()
+      // const hash1 = await this.calculateHashIdle()
+      // console.log('文件hash',hash)
+      // console.log('文件hash1',hash1)
+      const hash = await this.calculateHashSample()
+      this.hash = hash
+
+      // 问一下后端，文件是否上传过，如果没有，是否有存在的切片
       const {data:{uploaded, uploadedList}} = await this.$http.post('/checkfile',{
         hash:this.hash,
         ext:this.file.name.split('.').pop()
@@ -159,7 +170,12 @@ export default {
         // 秒传
         return this.$message.success('秒传成功')
       }
-			this.chunks = chunks.map((chunk,index)=>{
+      // console.log('文件hash2',hash2)
+      // 两个hash配合
+      // 抽样hash 不算全量
+      // 布隆过滤器 损失一小部分的精度，换取效率
+      
+      this.chunks = chunks.map((chunk,index)=>{
         // 切片的名字 hash+index
         const name = hash +'-'+ index
         return {
@@ -172,18 +188,33 @@ export default {
         }
       })
       await this.uploadChunks(uploadedList)
-			const form = new FormData()
-      form.append('name','file')
-      form.append('file',this.file)
-      const res = await this.$http.post('/uploadfile',form,{
-        onUploadProgress:progress=>{
-          this.uploadProgress = Number(((progress.loaded/progress.total)*100).toFixed(2))
-        }
-      })
-      console.log(res)
-		},
-		async uploadChunks(uploadedList=[]){
 
+    },
+		async uploadChunks(uploadedList=[]){
+			const requests = this.chunks
+        .filter(chunk=>uploadedList.indexOf(chunk.name)==-1)
+        .map((chunk,index)=>{
+          // 转成promise
+          const form = new FormData()
+          form.append('chunk',chunk.chunk)
+          form.append('hash',chunk.hash)
+          form.append('name',chunk.name)
+          // form.append('index',chunk.index)
+          return {form, index:chunk.index,error:0}
+        })
+        .map(({form,index})=> this.$http.post('/uploadfile',form,{
+          onUploadProgress:progress=>{
+            // 不是整体的进度条了，而是每个区块有自己的进度条，整体的进度条需要计算
+            this.chunks[index].progress = Number(((progress.loaded/progress.total)*100).toFixed(2))
+          }
+        }))
+      // @todo 并发量控制 
+      // 尝试申请tcp链接过多，也会造成卡顿
+      // 异步的并阿叔控制，
+      // await Promise.all(requests)
+
+      // await this.sendRequest(requests)
+      await Promise.all(requests)
 		},
 		bindEvents(){
       const drag = this.$refs.drag
