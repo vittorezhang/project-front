@@ -150,6 +150,28 @@ export default {
 			const hash1 = await this.calculateHashSample()
       console.log('文件hash',hash)
       console.log('文件hash1',hash1)
+			// 问一下后端，文件是否上传过，如果没有，是否有存在的切片
+      const {data:{uploaded, uploadedList}} = await this.$http.post('/checkfile',{
+        hash:this.hash,
+        ext:this.file.name.split('.').pop()
+      })
+      if(uploaded){
+        // 秒传
+        return this.$message.success('秒传成功')
+      }
+			this.chunks = chunks.map((chunk,index)=>{
+        // 切片的名字 hash+index
+        const name = hash +'-'+ index
+        return {
+          hash,
+          name,
+          index,
+          chunk:chunk.file,
+          // 设置进度条，已经上传的，设为100
+          progress:uploadedList.indexOf(name)>-1 ?100:0
+        }
+      })
+      await this.uploadChunks(uploadedList)
 			const form = new FormData()
       form.append('name','file')
       form.append('file',this.file)
@@ -161,7 +183,7 @@ export default {
       console.log(res)
 		},
 		async uploadChunks(uploadedList=[]){
-			
+
 		},
 		bindEvents(){
       const drag = this.$refs.drag
