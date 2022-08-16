@@ -160,6 +160,9 @@ export default {
       })
       console.log(res)
 		},
+		async uploadChunks(uploadedList=[]){
+			
+		},
 		bindEvents(){
       const drag = this.$refs.drag
       drag.addEventListener('dragover',e=>{
