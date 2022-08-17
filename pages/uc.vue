@@ -10,6 +10,10 @@
     <div>
       <el-button @click="uploadFile">上传</el-button>
     </div>
+		 <div>
+      <p>计算hash的进度</p>
+      <el-progress :stroke-width='20' :text-inside="true" :percentage="hashProgress" ></el-progress>
+    </div>
   </div>
 </template>
 
@@ -21,6 +25,7 @@ export default {
     return {
       file:null,
 			// uploadProgress:0,
+			hashProgress:0,
 			chunks:[]
     }
   },
