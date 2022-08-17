@@ -56,8 +56,16 @@ export default {
     }
   },
   computed:{
-		uploadProgress(){
-      
+		cubeWidth(){
+      return  Math.ceil(Math.sqrt(this.chunks.length))*16
+    },
+    uploadProgress(){
+      if(!this.file || this.chunks.length){
+        return 0
+      }
+      const loaded = this.chunks.map(item=>item.chunk.size*item.progress)
+                        .reduce((acc,cur)=>acc+cur,0)
+      return parseInt(((loaded*100)/this.file.size).toFixed(2))
     }
   },
 	async mounted(){
