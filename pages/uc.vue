@@ -14,6 +14,32 @@
       <p>计算hash的进度</p>
       <el-progress :stroke-width='20' :text-inside="true" :percentage="hashProgress" ></el-progress>
     </div>
+
+		<div>
+      <!-- chunk.progress 
+      progress<0 报错 显示红色
+      == 100 成功
+      别的数字 方块高度显示 -->
+      <!-- 尽可能让方块看起来仕真方形
+      比如10各方块 4*4
+      9 3*3
+      100 10*10 -->
+
+      <div class="cube-container" :style="{width:cubeWidth+'px'}">
+        <div class="cube" v-for="chunk in chunks" :key="chunk.name">
+          <div
+            :class="{
+              'uploading':chunk.progress>0&&chunk.progress<100,
+              'success':chunk.progress==100,
+              'error':chunk.progress<0
+            }"
+            :style="{height:chunk.progress+'%'}"
+          >
+            <i class="el-icon-loading" style="color:#f56c6c" v-if="chunk.progress<100 && chunk.progress>0"></i>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -251,4 +277,18 @@ export default {
   line-height 100px
   border 2px dashed #eee
   text-align center 
+.cube-container
+  .cube
+    width 14px
+    height 14px
+    line-height 12px
+    border  1px black solid
+    background #eee
+    float  left
+    >.success
+      background green
+    >.uploading
+      background blue
+    >.error
+      background red
 </style>
