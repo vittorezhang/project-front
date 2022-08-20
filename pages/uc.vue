@@ -263,6 +263,7 @@ export default {
 
       // await this.sendRequest(requests)
       await Promise.all(requests)
+			await this.mergeRequest()
 		},
 		bindEvents(){
       const drag = this.$refs.drag
