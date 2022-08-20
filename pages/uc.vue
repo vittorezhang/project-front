@@ -173,6 +173,15 @@ export default {
         }
 			})
 		},
+		async mergeRequest(){
+      const ret = await this.$http.post('/mergefile',{
+        ext:this.file.name.split('.').pop(),
+        size:CHUNK_SIZE,
+        hash:this.hash
+      })
+      const url = ret.data.url
+      // await this.$http.put('/user/info',{url:"/api"+url})
+    },
     handleFileChange(e){
       const [file] = e.target.files
       if(!file) return 
