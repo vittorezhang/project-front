@@ -223,19 +223,19 @@ export default {
       // 抽样hash 不算全量
       // 布隆过滤器 损失一小部分的精度，换取效率
       
-      this.chunks = chunks.map((chunk,index)=>{
-        // 切片的名字 hash+index
-        const name = hash +'-'+ index
-        return {
-          hash,
-          name,
-          index,
-          chunk:chunk.file,
-          // 设置进度条，已经上传的，设为100
-          progress:uploadedList.indexOf(name)>-1 ?100:0
-        }
-      })
-      await this.uploadChunks(uploadedList)
+      // this.chunks = chunks.map((chunk,index)=>{
+      //   // 切片的名字 hash+index
+      //   const name = hash +'-'+ index
+      //   return {
+      //     hash,
+      //     name,
+      //     index,
+      //     chunk:chunk.file,
+      //     // 设置进度条，已经上传的，设为100
+      //     progress:uploadedList.indexOf(name)>-1 ?100:0
+      //   }
+      // })
+      // await this.uploadChunks(uploadedList)
 
     },
 		async uploadChunks(uploadedList=[]){
