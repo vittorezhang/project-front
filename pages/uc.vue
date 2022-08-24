@@ -247,7 +247,7 @@ export default {
           form.append('chunk',chunk.chunk)
           form.append('hash',chunk.hash)
           form.append('name',chunk.name)
-          // form.append('index',chunk.index)
+          form.append('index',chunk.index)
           return {form, index:chunk.index,error:0}
         })
         .map(({form,index})=> this.$http.post('/uploadfile',form,{
