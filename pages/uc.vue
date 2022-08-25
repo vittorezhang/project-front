@@ -136,6 +136,9 @@ export default {
         }
       })
     },
+		async sendRequest(chunks,limit=4){
+
+		},
 		async calculateHashSample(){
 			// 布隆过滤器  判断一个数据存在与否
 			return new Promise(resolve=>{
@@ -261,7 +264,7 @@ export default {
       // 异步的并阿叔控制，
       // await Promise.all(requests)
 
-      // await this.sendRequest(requests)
+      await this.sendRequest(requests)
       await Promise.all(requests)
 			await this.mergeRequest()
 		},
