@@ -136,9 +136,67 @@ export default {
         }
       })
     },
+		// 上传可能报错
+    // 报错之后，进度条变红，开始重试
+    // 一个切片重试失败三次，整体全部终止
 		async sendRequest(chunks,limit=4){
+      // limit仕并发数
+      // 一个数组,长度仕limit
+      // [task12,task13,task4]
+      return new Promise((resolve,reject)=>{
+        const len = chunks.length
+        let counter = 0 
+        let isStop = false
+        const start = async ()=>{
+          if(isStop){
+            return 
+          }
+          const task = chunks.shift()
+          if(task){
+            const {form,index} = task
 
-		},
+            try{
+              await this.$http.post('/uploadfile',form,{
+                onUploadProgress:progress=>{
+                  // 不是整体的进度条了，而是每个区块有自己的进度条，整体的进度条需要计算
+                  this.chunks[index].progress = Number(((progress.loaded/progress.total)*100).toFixed(2))
+                }
+              })
+              if(counter==len-1){
+                // 最后一个任务
+                resolve()
+              }else{
+                counter++
+                // 启动下一个任务
+                start()
+              }
+            }catch(e){
+
+              this.chunks[index].progress = -1
+              if(task.error<3){
+                task.error++
+                chunks.unshift(task)
+                start()
+              }else{
+                // 错误三次
+                isStop = true
+                reject()
+              }
+            }
+          }
+        }
+
+        while(limit>0){
+          // 启动limit个任务
+          // 模拟一下延迟
+          setTimeout(()=>{
+            start()
+          },Math.random()*2000)
+          limit-=1
+        }
+      
+      })
+    },
 		async calculateHashSample(){
 			// 布隆过滤器  判断一个数据存在与否
 			return new Promise(resolve=>{
