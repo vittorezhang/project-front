@@ -38,7 +38,7 @@ export default {
   },
   mounted(){
     this.timer = null
-    
+    this.bindEvents()
     marked.setOptions({
       rendered: new marked.Renderer()
     })
@@ -49,7 +49,43 @@ export default {
     }
   },
   methods:{
-    
+		bindEvents(){
+      this.$refs.editor.addEventListener('paste',async e=>{
+        const files = e.clipboardData.files
+        console.log(files)
+        // 直接上传
+      })
+      this.$refs.editor.addEventListener('drop', async e=>{
+        const files = e.dataTransfer.files
+        console.log(files)
+        // @todo 文件上传
+        e.preventDefault()
+      })
+    },
+    update(e){
+      clearTimeout(this.timer)
+      this.timer = setTimeout(()=>{
+        this.content = e.target.value
+      },350)
+    },
+		async submit(){
+      // 文章列表，点赞，关注，草稿
+      // user =》 aticle  一对多
+      let ret = await this.$http.post('/article/create', {
+        content:this.content, //  selected:false
+        compiledContent:this.compiledContent // 显示只读取这个
+      })
+      if(ret.code==0){
+        this.$notify({
+          title:'创建成功',
+          type:'success',
+          message:`文章《${ret.data.title}》创建成功`
+        })
+        setTimeout(()=>{
+          this.$router.push({ path:'/article/'+ret.data.id})
+        })
+      }
+    }
   }
 }
 </script>
