@@ -17,6 +17,9 @@
 
 <script>
 import marked from 'marked'
+import hljs from 'highlight.js'
+import javascript from 'highlight.js/lib/languages/javascript'
+import 'highlight.js/styles/monokai-sublime.css'
 
 export default {
   data(){
@@ -40,7 +43,11 @@ export default {
     this.timer = null
     this.bindEvents()
     marked.setOptions({
-      rendered: new marked.Renderer()
+      rendered: new marked.Renderer(),
+      highlight(code){
+        return hljs.highlightAuto(code).value
+      }
+      // ..
     })
   },
   computed:{
