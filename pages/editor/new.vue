@@ -1,5 +1,12 @@
 <template>
   <div>
+		<!-- <div contenteditable="true">哈哈</div>
+    document.execCommand('') -->
+    <!-- 1. 刚开始第三方的
+      tinyMce，wangEditor -->
+		<!-- 2. 开源的定制  slate.js  -->
+		<!-- 3. 又专门的编辑器开发团队，自己定制把，非常复杂，word在线版
+			计算位置，定位，样式，实现一个简单的浏览器工作量差不多的 -->
     <div class="write-btn">
       <el-button @click="submit" type='primary'>提交</el-button>
     </div>
