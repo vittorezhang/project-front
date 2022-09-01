@@ -76,12 +76,12 @@ export default {
       },350)
     },
 		async submit(){
-      // // 文章列表，点赞，关注，草稿
-      // // user =》 aticle  一对多
-      // let ret = await this.$http.post('/article/create', {
-      //   content:this.content, //  selected:false
-      //   compiledContent:this.compiledContent // 显示只读取这个
-      // })
+      // 文章列表，点赞，关注，草稿
+      // user =》 aticle  一对多
+      let ret = await this.$http.post('/article/create', {
+        content:this.content, //  selected:false
+        compiledContent:this.compiledContent // 显示只读取这个
+      })
     }
   }
 }
