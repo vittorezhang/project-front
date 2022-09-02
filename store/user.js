@@ -31,10 +31,20 @@ const mutations = {
 
 const actions = {
   login: async({state,commit}, data)=>{
-    
+    let ret = await http.post('/user/login', data)
+    // 登录返回token
+    commit('SET_TOKEN', ret.data.token)
+    console.log('actin data',data)
+    return ret
   },
   detail: async({state,commit}, data)=>{
-   
+    let ret = await http.get('/user/detail')
+    if(ret.code===0){
+      console.log('setuser',ret)
+      commit('SET_USER',ret.data)
+      return ret
+
+    }
   }
 }
 
