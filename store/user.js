@@ -26,6 +26,7 @@ const mutations = {
     state.nickname = ''
     state.avatar = ''
     state.token  = ''
+
   }
 }
 
