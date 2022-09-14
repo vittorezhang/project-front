@@ -5,8 +5,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    // title: process.env.npm_package_name || '',
-		title: '小开社区',
+    title: '小开社区',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -31,7 +30,7 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-		'@/plugins/axios'
+    '@/plugins/axios'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -46,7 +45,7 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-		'@nuxtjs/proxy'
+    '@nuxtjs/proxy'
   ],
   /*
   ** Axios module configuration
@@ -65,9 +64,9 @@ module.exports = {
     extend (config, ctx) {
     }
   },
-	proxy:{
+  proxy:{
     "/api/":{
-      target:"http://127.0.0.1:7001",
+      target:"http://localhost:7001",
       secure:false,
       pathRewrite:{
         '^/api':""
